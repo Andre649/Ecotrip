@@ -4,28 +4,28 @@ using EcoTrip.API.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Adiciona suporte a Controllers e Swagger (Configuração Simplificada)
+// Forçar a porta 5261
+builder.WebHost.UseUrls("http://0.0.0.0:5261");
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(); // Sem parâmetros customizados para evitar erro de namespace por enquanto
+builder.Services.AddSwaggerGen();
 
-// 1. Configuração da Conexão com o Banco
-builder.Services.AddScoped<IDbConnection>(sp => 
-    new NpgsqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-// 2. Registro do Repositório
+// Injeção do Banco
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddScoped<IDbConnection>(sp => new NpgsqlConnection(connectionString));
 builder.Services.AddScoped<IVeiculoRepository, VeiculoRepository>();
 
 var app = builder.Build();
 
-// Pipeline HTTP
-if (app.Environment.IsDevelopment())
+// ATENÇÃO: Swagger fora do IF para garantir que funcione no Codespaces
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(); // O padrão já resolve para /swagger/index.html
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "EcoTrip API v1");
+    c.RoutePrefix = string.Empty; // Define o Swagger como página inicial (/)
+});
 
-app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 

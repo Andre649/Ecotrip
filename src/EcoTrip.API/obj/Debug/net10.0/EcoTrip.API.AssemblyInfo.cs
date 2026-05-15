@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EcoTrip.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+87522476fa7f16cab319492330143f259e6f3a42")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b9209a6a70226e54c9aa9dea755886f22f44bb24")]
 [assembly: System.Reflection.AssemblyProductAttribute("EcoTrip.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EcoTrip.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
